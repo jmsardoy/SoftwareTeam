@@ -9,15 +9,27 @@ public class HeartModel implements HeartModelInterface, Runnable {
     int bpm = 90;
 	Random random = new Random(System.currentTimeMillis());
 	Thread thread;
-
-	public HeartModel() {
+	
+	private static HeartModel instanciaUnica;
+	private static int numeroDeLlamadas;
+	
+	private HeartModel(){
 		thread = new Thread(this);
 		thread.start();
+		numeroDeLlamadas = 0;
+	}
+	
+	public static HeartModel getInstance() {
+		if(instanciaUnica == null){
+			instanciaUnica = new HeartModel();
+		}
+		numeroDeLlamadas++;
+		return instanciaUnica;
 	}
 
 	public void run() {
 		int lastrate = -1;
-
+		notifyBPMObservers();
 		for(;;) {
 			int change = random.nextInt(10);
 			if (random.nextInt(2) == 0) {
@@ -75,5 +87,17 @@ public class HeartModel implements HeartModelInterface, Runnable {
 			BPMObserver observer = (BPMObserver)bpmObservers.get(i);
 			observer.updateBPM();
 		}
+	}
+	
+	public int getNumeroDeLlamadas(){
+		return numeroDeLlamadas;
+	}
+
+	
+	public HeartModel pedirInstance() {
+		// TODO Auto-generated method stub
+		HeartModel heart = getInstance();
+		notifyBPMObservers();
+		return heart;
 	}
 }

@@ -160,4 +160,10 @@ public class BeatModel implements BeatModelInterface, MetaEventListener {
 		}
         return event;
     }
+
+	
+	public int getNumeroDeLlamadas() {
+		return -1;
+		
+	}
 }
