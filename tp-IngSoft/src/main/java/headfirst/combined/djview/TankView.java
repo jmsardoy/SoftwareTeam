@@ -67,7 +67,7 @@ public void createView(){
 	progressBar.setBounds(254, 83, 170, 168);
 	progressBar.setValue(0);
 	progressBar.setStringPainted(true);
-	//progressBar.setForeground(SystemColor.textHighlight);
+	//gprogressBar.setForeground(SystemColor.textHighlight);
 	//progressBar.setForeground(Color.blue);
 	progressBar.setOrientation(SwingConstants.VERTICAL);
 	
