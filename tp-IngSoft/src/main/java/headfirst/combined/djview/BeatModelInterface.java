@@ -19,5 +19,9 @@ public interface BeatModelInterface {
   
 	void removeObserver(BPMObserver o);
 	
+	void registerObserver(LevelObserver o);
+	
+	void removeObserver(LevelObserver o);
+	
 	int getNumeroDeLlamadas();
 }

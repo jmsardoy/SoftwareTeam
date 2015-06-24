@@ -25,4 +25,7 @@ public class BeatBar extends JProgressBar implements Runnable {
 			} catch (Exception e) {};
 		}
 	}
+	public void stop(){
+		thread.stop();
+	}
 }

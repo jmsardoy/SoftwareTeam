@@ -5,6 +5,7 @@ import java.util.*;
 public class HeartModel implements HeartModelInterface, Runnable {
 	ArrayList beatObservers = new ArrayList();
 	ArrayList bpmObservers = new ArrayList();
+	ArrayList levelObservers = new ArrayList();
 	int time = 1000;
     int bpm = 90;
 	Random random = new Random(System.currentTimeMillis());
@@ -86,6 +87,17 @@ public class HeartModel implements HeartModelInterface, Runnable {
 		for(int i = 0; i < bpmObservers.size(); i++) {
 			BPMObserver observer = (BPMObserver)bpmObservers.get(i);
 			observer.updateBPM();
+		}
+	}
+	
+	public void registerObserver(LevelObserver o) {
+		levelObservers.add(o);
+	}
+
+	public void removeObserver(LevelObserver o) {
+		int i = levelObservers.indexOf(o);
+		if (i >= 0) {
+			levelObservers.remove(i);
 		}
 	}
 	

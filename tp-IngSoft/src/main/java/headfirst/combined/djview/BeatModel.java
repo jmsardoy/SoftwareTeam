@@ -7,6 +7,7 @@ public class BeatModel implements BeatModelInterface, MetaEventListener {
     Sequencer sequencer;
 	ArrayList beatObservers = new ArrayList();
 	ArrayList bpmObservers = new ArrayList();
+	ArrayList levelObservers = new ArrayList();
     int bpm = 90;
     Sequence sequence;
     Track track;
@@ -164,6 +165,20 @@ public class BeatModel implements BeatModelInterface, MetaEventListener {
 	
 	public int getNumeroDeLlamadas() {
 		return -1;
+		
+	}
+
+	public void registerObserver(LevelObserver o) {
+		levelObservers.add(o);
+		
+	}
+
+	
+	public void removeObserver(LevelObserver o) {
+		int i = levelObservers.indexOf(o);
+		if (i >= 0) {
+			levelObservers.remove(i);
+		}
 		
 	}
 }

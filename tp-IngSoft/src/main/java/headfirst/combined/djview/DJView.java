@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class DJView implements ActionListener,  BeatObserver, BPMObserver {
+public class DJView implements ActionListener,  BeatObserver, BPMObserver, LevelObserver {
 	BeatModelInterface model;
 	ControllerInterface controller;
     JFrame viewFrame;
@@ -28,6 +28,7 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 		this.model = model;
 		model.registerObserver((BeatObserver)this);
 		model.registerObserver((BPMObserver)this);
+		model.registerObserver((LevelObserver)this);
     }
     
     public void createView() {
@@ -137,7 +138,7 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 
     public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == setBPMButton) {
-			int bpm = Integer.parseInt(bpmTextField.getText());
+			int bpm = 	Integer.parseInt(bpmTextField.getText());
         	controller.setBPM(bpm);
 		} else if (event.getSource() == increaseBPMButton) {
 			controller.increaseBPM();
@@ -169,5 +170,14 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 		if (beatBar != null) {
 			 beatBar.setValue(100);
 		}
+	}
+
+	public void updateLevel() {
+		if(beatBar != null){
+			beatBar.stop();
+			beatBar.setValue(model.getBPM());
+			bpmOutputLabel.setText("Tank Level " + model.getBPM());
+		}
+		
 	}
 }

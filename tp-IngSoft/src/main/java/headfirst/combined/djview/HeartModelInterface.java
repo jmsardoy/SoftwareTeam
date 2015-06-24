@@ -6,6 +6,8 @@ public interface HeartModelInterface {
 	void removeObserver(BeatObserver o);
 	void registerObserver(BPMObserver o);
 	void removeObserver(BPMObserver o);
+	void registerObserver(LevelObserver o);
+	void removeObserver(LevelObserver o);
 	HeartModel pedirInstance();
 	int getNumeroDeLlamadas();
 }

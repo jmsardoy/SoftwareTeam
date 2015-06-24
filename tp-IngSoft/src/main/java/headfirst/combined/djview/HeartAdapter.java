@@ -35,6 +35,15 @@ public class HeartAdapter implements BeatModelInterface {
 		heart.removeObserver(o);
 	}
 
+	public void registerObserver(LevelObserver o) {
+		heart.registerObserver(o);
+	}
+
+
+	public void removeObserver(LevelObserver o) {
+		heart.removeObserver(o);
+		
+	}
 	
 	public int getNumeroDeLlamadas() {
 		return heart.getNumeroDeLlamadas();
