@@ -5,18 +5,23 @@ public class TankController implements ControllerInterface{
 	TankModelInterface model;
 	DJView djView;
 	TankView tankView;
+	static TankAdapter tankAdapter;
 	
 	public TankController(TankModelInterface model){
 		this.model = model;
-		djView = new DJView(this, new TankAdapter(model));
+		tankAdapter = new TankAdapter(model);
+		djView = new DJView(this, tankAdapter);
 		djView.createView();
-		//djView.createControls();
-		//djView.disableStopMenuItem();
-		//djView.disableStartMenuItem();
 		tankView = new TankView(this,model);
 		tankView.createView();
 		tankView.setVisible(true);
 		
+	}
+	
+	public TankController(DJView view){
+		djView = view;
+		djView.model = tankAdapter;
+		djView.controller = this;
 	}
 	
 	
@@ -44,7 +49,6 @@ public class TankController implements ControllerInterface{
 	public void setBPM(int bpm) {
 		
 	}
-	
 	
 	
 

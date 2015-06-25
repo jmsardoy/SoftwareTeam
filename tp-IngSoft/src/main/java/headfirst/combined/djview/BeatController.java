@@ -1,7 +1,7 @@
 package main.java.headfirst.combined.djview;
   
 public class BeatController implements ControllerInterface {
-	BeatModelInterface model;
+	static BeatModelInterface model;
 	DJView view;
    
 	public BeatController(BeatModelInterface model) {
@@ -12,6 +12,12 @@ public class BeatController implements ControllerInterface {
 		view.disableStopMenuItem();
 		view.enableStartMenuItem();
 		model.initialize();
+	}
+	
+	public BeatController(DJView view){
+		this.view = view;
+		this.view.model = this.model;
+		this.view.controller = this;
 	}
   
 	public void start() {

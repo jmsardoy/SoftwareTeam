@@ -135,11 +135,23 @@ public void createView(){
 	ActionListener btnListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == btnSimular){
-				float nivelMinimo = Float.parseFloat(textField.getText());
-				float consumo = Float.parseFloat(textField_1.getText());
-				float llenado = Float.parseFloat(textField_2.getText());
-				slider.setValue((int)nivelMinimo);
-				controller.simular(nivelMinimo,consumo,llenado);
+				float nivelMinimo;
+				float consumo;
+				float llenado;
+				try{
+					nivelMinimo = Float.parseFloat(textField.getText());
+					consumo = Float.parseFloat(textField_1.getText());
+					llenado = Float.parseFloat(textField_2.getText());
+					slider.setValue((int)nivelMinimo);
+					controller.simular(nivelMinimo,consumo,llenado);
+				}
+				catch(NumberFormatException e1){
+					showErrorMessage("Algun campo esta vacio");
+				}
+				
+					
+				
+				
 				//System.out.println(nivelMinimo+consumo+llenado);
 			}
 			
@@ -158,6 +170,12 @@ public void createView(){
 	public void updateLevel() {
 		if(progressBar != null){
 			progressBar.setValue((int)model.getTankValue());
+			if(model.getDatosErroneos()){
+				showErrorMessage("Datos Erroneos, por favor volver a ingresar");
+			}
+			/*else{
+				System.out.println("datos Piolas");
+			}*/
 			if(model.getEstadoBomba()){
 				lblBomba.setText("BOMBA: ON");
 			}
@@ -167,5 +185,21 @@ public void createView(){
 			
 		}
 		
+	}
+	void clearTextFields(){
+		textField.setText("");
+		textField_1.setText("");
+		textField_2.setText("");
+	}
+	void showErrorMessage(String message){
+		clearTextFields();
+		JFrame alertFrame = new JFrame();
+		alertFrame.setLocationRelativeTo(alertFrame);
+		//alertFrame.setSize(320,100);
+		JLabel alertLabel= new JLabel(message);
+		alertLabel.setSize(message.length()*8, 100);
+		alertFrame.setSize(alertLabel.getSize());
+		alertFrame.add(alertLabel);
+		alertFrame.setVisible(true);
 	}
 }

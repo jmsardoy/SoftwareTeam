@@ -6,12 +6,15 @@ import javax.swing.*;
 
 public class BeatBar extends JProgressBar implements Runnable { 
     JProgressBar progressBar;
+    
+    
 	Thread thread;
 
 	public BeatBar() {
 		thread = new Thread(this);
 		setMaximum(100);
 		thread.start();
+		
 	}
 
 	public void run() {
@@ -27,5 +30,9 @@ public class BeatBar extends JProgressBar implements Runnable {
 	}
 	public void stop(){
 		thread.stop();
+	}
+	
+	public void start(){
+		thread.start();
 	}
 }

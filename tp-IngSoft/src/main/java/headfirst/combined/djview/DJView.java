@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class DJView implements ActionListener,  BeatObserver, BPMObserver, LevelObserver {
+	DJView thisView= this;
 	BeatModelInterface model;
 	ControllerInterface controller;
     JFrame viewFrame;
@@ -47,6 +48,45 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver, Level
         viewFrame.getContentPane().add(viewPanel, BorderLayout.CENTER);
         viewFrame.pack();
         viewFrame.setVisible(true);
+        
+        
+        menuBar = new JMenuBar();
+        menu = new JMenu("Modelo");
+        startMenuItem = new JMenuItem("TankModel");
+        menu.add(startMenuItem);
+        startMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                //controller.start();
+            	thisView.changeTankModel();
+            	//System.out.println("tankmodel seleccionado");
+            	//model = new TankAdapter(new TankModel());
+            	//this = new DJView(new TankController((TankModelInterface)model),model);
+            	/*model = new TankAdapter(new TankModel());
+            	beatBar.stop();
+            	model.registerObserver((LevelObserver)this);*/
+            	//controller = new TankController((TankModelInterface) new TankAdapter(new TankModel()));
+            }
+        });
+        stopMenuItem = new JMenuItem("HeartModel");
+        menu.add(stopMenuItem); 
+        stopMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                //controller.stop();
+            	thisView.changeHeartModel();
+            }
+        });
+        JMenuItem exit = new JMenuItem("BeatModel");
+        exit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                //System.exit(0);
+            	thisView.changeBeatModel();
+            }
+        });
+
+        menu.add(exit);
+        menuBar.add(menu);
+        
+        viewFrame.setJMenuBar(menuBar);
 	}
   
   
@@ -179,5 +219,38 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver, Level
 			bpmOutputLabel.setText("Tank Level " + model.getBPM());
 		}
 		
+	}
+	
+	public void changeTankModel(){
+		model.removeObserver((BeatObserver) thisView);
+		model.removeObserver((BPMObserver) thisView);
+		model.removeObserver((LevelObserver) thisView);
+		new TankController(this);
+		//beatBar.stop();
+		model.registerObserver((LevelObserver)thisView);
+
+	}
+	public void changeBeatModel(){
+		model.removeObserver((BeatObserver) thisView);
+		model.removeObserver((BPMObserver) thisView);
+		model.removeObserver((LevelObserver) thisView);
+		new BeatController(this);
+		beatBar = new BeatBar();
+		beatBar.setValue(0);
+		//beatBar.start();
+		//beatBar = null;
+		model.registerObserver((BeatObserver)thisView);
+	}
+	
+	public void changeHeartModel(){
+		model.removeObserver((BeatObserver) thisView);
+		model.removeObserver((BPMObserver) thisView);
+		model.removeObserver((LevelObserver) thisView);
+		new HeartController(this);
+		beatBar = new  BeatBar();
+		
+		//beatBar.start();
+		beatBar.setValue(0);
+		model.registerObserver((BPMObserver)thisView);
 	}
 }
