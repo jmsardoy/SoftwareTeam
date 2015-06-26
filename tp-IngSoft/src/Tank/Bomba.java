@@ -1,4 +1,4 @@
-package main.java.headfirst.combined.djview;
+package Tank;
 
 public class Bomba implements Runnable{
 

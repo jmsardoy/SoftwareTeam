@@ -1,6 +1,9 @@
-package main.java.headfirst.combined.djview;
+package Beat;
   
 import javax.sound.midi.*;
+
+import Tank.LevelObserver;
+
 import java.util.*;
 
 public class BeatModel implements BeatModelInterface, MetaEventListener {

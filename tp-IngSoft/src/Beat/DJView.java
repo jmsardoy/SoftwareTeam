@@ -1,16 +1,18 @@
-package main.java.headfirst.combined.djview;
+package Beat;
     
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class DJView implements ActionListener,  BeatObserver, BPMObserver, LevelObserver {
-	BeatModelInterface model;
-	ControllerInterface controller;
-    JFrame viewFrame;
-    JPanel viewPanel;
-	BeatBar beatBar;
-	JLabel bpmOutputLabel;
+import Tank.LevelObserver;
+
+public class DJView implements ActionListener,  BeatObserver, BPMObserver{
+	protected BeatModelInterface model;
+	protected ControllerInterface controller;
+    protected JFrame viewFrame;
+    protected JPanel viewPanel;
+	protected BeatBar beatBar;
+	protected JLabel bpmOutputLabel;
     JFrame controlFrame;
     JPanel controlPanel;
     JLabel bpmLabel;
@@ -18,17 +20,16 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver, Level
     JButton setBPMButton;
     JButton increaseBPMButton;
     JButton decreaseBPMButton;
-    JMenuBar menuBar;
-    JMenu menu;
-    JMenuItem startMenuItem;
-    JMenuItem stopMenuItem;
+    protected JMenuBar menuBar;
+    protected JMenu menu;
+    protected JMenuItem startMenuItem;
+    protected JMenuItem stopMenuItem;
 
     public DJView(ControllerInterface controller, BeatModelInterface model) {	
 		this.controller = controller;
 		this.model = model;
 		model.registerObserver((BeatObserver)this);
 		model.registerObserver((BPMObserver)this);
-		model.registerObserver((LevelObserver)this);
     }
     
     public void createView() {
@@ -50,10 +51,10 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver, Level
 	}
   
   
-    public void createControls() {
+    public void createControls(String name) {
 		// Create all Swing components here
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        controlFrame = new JFrame("Control");
+        JFrame.setDefaultLookAndFeelDecorated(false);
+        controlFrame = new JFrame(name);
         controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         controlFrame.setSize(new Dimension(100, 80));
 
@@ -156,11 +157,7 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver, Level
 				}
 			} else {
 				if (bpmOutputLabel != null) {
-					int num = model.getNumeroDeLlamadas();
-					if(num>0){
-						bpmOutputLabel.setText(String.valueOf(num));
-					}
-        			//bpmOutputLabel.setText("Current BPM: " + model.getBPM());
+					bpmOutputLabel.setText("Current BPM: " + model.getBPM());
 				}
 			}
 		}
@@ -171,13 +168,8 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver, Level
 			 beatBar.setValue(100);
 		}
 	}
+	
 
-	public void updateLevel() {
-		if(beatBar != null){
-			beatBar.stop();
-			beatBar.setValue(model.getBPM());
-			bpmOutputLabel.setText("Tank Level " + model.getBPM());
-		}
-		
-	}
+
+
 }

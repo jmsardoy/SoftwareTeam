@@ -1,4 +1,5 @@
-package main.java.headfirst.combined.djview;
+package Beat;
+
   
 public class DJTestDrive {
 

@@ -1,13 +1,29 @@
-package main.java.headfirst.combined.djview;
+package Beat;
 
-public interface HeartModelInterface {
-	int getHeartRate();
+import Tank.LevelObserver;
+  
+public interface BeatModelInterface {
+	void initialize();
+  
+	void on();
+  
+	void off();
+  
+    void setBPM(int bpm);
+  
+	int getBPM();
+  
 	void registerObserver(BeatObserver o);
+  
 	void removeObserver(BeatObserver o);
+  
 	void registerObserver(BPMObserver o);
+  
 	void removeObserver(BPMObserver o);
+	
 	void registerObserver(LevelObserver o);
+	
 	void removeObserver(LevelObserver o);
-	HeartModel pedirInstance();
+	
 	int getNumeroDeLlamadas();
 }

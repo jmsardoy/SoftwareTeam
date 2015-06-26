@@ -1,4 +1,8 @@
-package main.java.headfirst.combined.djview;
+package Tank;
+
+import Beat.BPMObserver;
+import Beat.BeatModelInterface;
+import Beat.BeatObserver;
 
 public class TankAdapter implements BeatModelInterface {
 	TankModelInterface tank;

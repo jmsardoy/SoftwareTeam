@@ -1,17 +1,29 @@
-package main.java.headfirst.combined.djview;
+package Beat;
+
+import Tank.BeatBarView;
+
   
 public class BeatController implements ControllerInterface {
-	BeatModelInterface model;
+	static BeatModelInterface model;
 	DJView view;
    
 	public BeatController(BeatModelInterface model) {
 		this.model = model;
 		view = new DJView(this, model);
         view.createView();
-        view.createControls();
+        view.createControls("Beat");
 		view.disableStopMenuItem();
 		view.enableStartMenuItem();
 		model.initialize();
+	}
+	
+	public BeatController(BeatBarView v){
+		if(model != null){
+			view = v;
+			((BeatBarView) view).setModel(model);
+			((BeatBarView) view).setController((ControllerInterface)this);
+		}
+		
 	}
   
 	public void start() {

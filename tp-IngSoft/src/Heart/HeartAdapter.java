@@ -1,4 +1,9 @@
-package main.java.headfirst.combined.djview;
+package Heart;
+
+import Beat.BPMObserver;
+import Beat.BeatModelInterface;
+import Beat.BeatObserver;
+import Tank.LevelObserver;
 
 public class HeartAdapter implements BeatModelInterface {
 	HeartModelInterface heart;

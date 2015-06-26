@@ -1,4 +1,6 @@
-package main.java.headfirst.combined.djview;
+package Tank;
+
+import Beat.ControllerInterface;
 
 public class TankTestDrive {
 

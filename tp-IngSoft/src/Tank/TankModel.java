@@ -1,6 +1,9 @@
-package main.java.headfirst.combined.djview;
+package Tank;
 
 import java.util.ArrayList;
+
+import Beat.BPMObserver;
+import Beat.BeatObserver;
 
 public class TankModel implements TankModelInterface{
 	
@@ -117,7 +120,6 @@ public class TankModel implements TankModelInterface{
 	}
 	public void registerObserver(LevelObserver o) {
 		levelObservers.add(o);
-		
 	}
 
 	

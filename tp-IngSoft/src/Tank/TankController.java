@@ -1,21 +1,33 @@
-package main.java.headfirst.combined.djview;
+package Tank;
+
+import Beat.BeatModelInterface;
+import Beat.ControllerInterface;
+import Beat.DJView;
 
 public class TankController implements ControllerInterface{
 
-	TankModelInterface model;
+	static TankModelInterface model;
+	static TankAdapter tankAdapter;
 	DJView djView;
 	TankView tankView;
 	
 	public TankController(TankModelInterface model){
 		this.model = model;
-		djView = new DJView(this, new TankAdapter(model));
+		tankAdapter = new TankAdapter(model);
+		djView = new BeatBarView(this, tankAdapter);
 		djView.createView();
-		//djView.createControls();
-		//djView.disableStopMenuItem();
-		//djView.disableStartMenuItem();
 		tankView = new TankView(this,model);
 		tankView.createView();
 		tankView.setVisible(true);
+		
+	}
+	
+	public TankController(BeatBarView v){
+		if(tankAdapter != null){
+			djView = v;
+			((BeatBarView) djView).setModel(tankAdapter);
+			((BeatBarView) djView).setController((ControllerInterface)this);
+		}
 		
 	}
 	

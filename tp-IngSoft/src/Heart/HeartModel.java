@@ -1,6 +1,10 @@
-package main.java.headfirst.combined.djview;
+package Heart;
 
 import java.util.*;
+
+import Beat.BPMObserver;
+import Beat.BeatObserver;
+import Tank.LevelObserver;
 
 public class HeartModel implements HeartModelInterface, Runnable {
 	ArrayList beatObservers = new ArrayList();

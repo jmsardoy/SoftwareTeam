@@ -1,4 +1,4 @@
-package main.java.headfirst.combined.djview;
+package Beat;
   
 public interface BPMObserver {
 	void updateBPM();
