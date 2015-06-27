@@ -14,6 +14,7 @@ public class TankModel implements TankModelInterface{
 	private float valorMinimo;
 	private float consumeRate;
 	private float fillRate;
+	private boolean datosErroneos;
 	
 	Tank tank;
 	Consumidor consumidor;
@@ -33,18 +34,22 @@ public class TankModel implements TankModelInterface{
 	}
 		
 	public void simular() {
-		consumidorThread = new Thread(consumidor);
-		bombaThread = new Thread(bomba);
-		consumidorThread.start();
-		bombaThread.start();
+		if(!datosErroneos){
+			consumidorThread = new Thread(consumidor);
+			bombaThread = new Thread(bomba);
+			consumidorThread.start();
+			bombaThread.start();
+		}
 	
 	}
 
 	@SuppressWarnings("deprecation")
 	public void parar() {
 		bomba.apagarBomba();
-		consumidorThread.stop();
-		bombaThread.stop();
+		if(consumidorThread != null && bombaThread != null){
+			consumidorThread.stop();
+			bombaThread.stop();
+		}
 
 		
 	}
@@ -75,9 +80,16 @@ public class TankModel implements TankModelInterface{
 		return tank.getCantidadDeAgua();
 	}
 	public void setParametros(float valorMinimo, float consumeRate, float fillRate){
-		this.setValorMinimo(valorMinimo);
-		this.setConsumeRate(consumeRate);
-		this.setFillRate(fillRate);
+		if(valorMinimo<0 || consumeRate<0 || fillRate<0 || valorMinimo > 100){
+			datosErroneos = true;
+			notifyLevelObservers();
+		}
+		else{
+			datosErroneos = false;
+			this.setValorMinimo(valorMinimo);
+			this.setConsumeRate(consumeRate);
+			this.setFillRate(fillRate);
+		}
 	}
 	
 	
@@ -138,14 +150,12 @@ public class TankModel implements TankModelInterface{
 		}
 	}
 	
-	public Tank getTank(){
-		return tank;
-	}
-	
 	public boolean getEstadoBomba(){
 		return bomba.getPrendida();
 	}
-	
+	public boolean getDatosErroneos(){
+		return datosErroneos;
+	}
 
 	
 

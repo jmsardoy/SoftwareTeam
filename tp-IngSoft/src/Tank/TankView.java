@@ -20,6 +20,9 @@ import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.EventObject;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -27,7 +30,7 @@ import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.JCheckBox;
 
-public class TankView extends JFrame implements LevelObserver{
+public class TankView extends JFrame implements LevelObserver, KeyListener{
 
 	TankModelInterface model;
 	TankController controller;
@@ -38,6 +41,10 @@ public class TankView extends JFrame implements LevelObserver{
 	private JTextField textField_2;
 	private JProgressBar progressBar;
 	private JLabel lblBomba;
+	private JSlider slider;
+	private JButton btnParar;
+	private JButton btnSimular;
+	private JFrame alertFrame;
 
 	/**
 	 * Create the frame.
@@ -57,7 +64,7 @@ public void createView(){
 	setContentPane(contentPane);
 	
 	((JPanel)getContentPane()).setOpaque(false);
-	ImageIcon uno=new ImageIcon(this.getClass().getResource("/Imagenes/fon.png"));
+	ImageIcon uno=new ImageIcon(this.getClass().getResource("/Imagenes/fon.jpg"));
 	JLabel fondo= new JLabel(); fondo.setIcon(uno);
 	getLayeredPane().add(fondo,JLayeredPane.FRAME_CONTENT_LAYER);
 	fondo.setBounds(0,0,uno.getIconWidth(),uno.getIconHeight());
@@ -82,7 +89,7 @@ public void createView(){
 	lblMinLevel.setBounds(20, 86, 76, 14);
 	contentPane.add(lblMinLevel);
 	
-	final JSlider slider = new JSlider();
+	slider = new JSlider();
 	slider.setBounds(221, 82, 23, 169);
 	slider.setValue(30);
 	slider.setOrientation(SwingConstants.VERTICAL);
@@ -106,17 +113,18 @@ public void createView(){
 	textField_2.setBounds(106, 145, 86, 20);
 	contentPane.add(textField_2);
 	
-	final JButton btnSimular = new JButton("Simular");
+	btnSimular = new JButton("Simular");
 	btnSimular.setBounds(20, 173, 172, 23);
 	contentPane.add(btnSimular);
 	
-	final JButton btnParar = new JButton("Parar");
+	btnParar = new JButton("Parar");
 	btnParar.setBounds(20, 198, 172, 23);
 	contentPane.add(btnParar);
 	
 	lblBomba = new JLabel("BOMBA");
 	lblBomba.setBounds(71, 233, 100, 14);
 	contentPane.add(lblBomba);
+	
 
 	//EVENTOS
 	
@@ -134,30 +142,27 @@ public void createView(){
 	
 	ActionListener btnListener = new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == btnSimular){
-				float nivelMinimo = Float.parseFloat(textField.getText());
-				float consumo = Float.parseFloat(textField_1.getText());
-				float llenado = Float.parseFloat(textField_2.getText());
-				slider.setValue((int)nivelMinimo);
-				controller.simular(nivelMinimo,consumo,llenado);
-				//System.out.println(nivelMinimo+consumo+llenado);
-			}
-			
-			if(e.getSource() == btnParar){
-				controller.parar();
-			}
+			buttonActions(e);
 		}
 	};
 	btnSimular.addActionListener(btnListener);
 	btnParar.addActionListener(btnListener);
+	btnSimular.addKeyListener(this);
+	btnParar.addKeyListener(this);
 	
-	//this.setVisible(true);
+	textField.addKeyListener(this);
+	textField_1.addKeyListener(this);
+	textField_2.addKeyListener(this);
+	
 }
 
 
 	public void updateLevel() {
 		if(progressBar != null){
 			progressBar.setValue((int)model.getTankValue());
+			if(model.getDatosErroneos()){
+				showErrorMessage("Datos Erroneos, por favor volver a ingresar");
+			}
 			if(model.getEstadoBomba()){
 				lblBomba.setText("BOMBA: ON");
 			}
@@ -167,5 +172,61 @@ public void createView(){
 			
 		}
 		
+	}
+	void clearTextFields(){
+		textField.setText("");
+		textField_1.setText("");
+		textField_2.setText("");
+	}
+	void showErrorMessage(String message){
+		clearTextFields();
+		alertFrame = new JFrame();
+		alertFrame.setLocationRelativeTo(alertFrame);
+		JLabel alertLabel= new JLabel(message);
+		alertLabel.setSize(message.length()*8, 100);
+		alertFrame.setSize(alertLabel.getSize());
+		alertFrame.add(alertLabel);
+		alertFrame.setVisible(true);
+		alertFrame.addKeyListener(this);
+	}
+
+
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == 10){
+			if(e.getSource() == alertFrame){
+				alertFrame.setVisible(false);
+			}
+			buttonActions(e);
+		}
+		
+	}
+
+	public void keyReleased(KeyEvent e) {}
+
+
+	public void keyTyped(KeyEvent e) {}
+
+	void buttonActions(EventObject e){
+		if(e.getSource() == btnSimular ||e.getSource() == textField||e.getSource() == textField_1
+				|| e.getSource() == textField_2){
+			float nivelMinimo;
+			float consumo;
+			float llenado;
+			try{
+				controller.parar();
+				nivelMinimo = Float.parseFloat(textField.getText());
+				consumo = Float.parseFloat(textField_1.getText());
+				llenado = Float.parseFloat(textField_2.getText());
+				//slider.setValue((int)nivelMinimo);
+				
+				controller.simular(nivelMinimo,consumo,llenado);
+			}
+			catch(NumberFormatException e1){
+				showErrorMessage("Algun campo esta vacio");
+			}
+		}
+		if(e.getSource() == btnParar){
+			controller.parar();
+		}
 	}
 }

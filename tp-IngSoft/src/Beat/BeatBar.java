@@ -17,7 +17,11 @@ public class BeatBar extends JProgressBar implements Runnable {
 
 	public void run() {
 		for(;;) {
-			if(on){
+			boolean isOn;
+			synchronized(BeatBar.class){
+				isOn = on;
+			}
+			if(isOn){
 				int value = getValue();
 				value = (int)(value * .75);
 				setValue(value);
@@ -37,10 +41,10 @@ public class BeatBar extends JProgressBar implements Runnable {
 			}
 		}
 	}
-	public void stop(){
+	public synchronized void stop(){
 		on = false;
 	}
-	public void resume(){
+	public synchronized void resume(){
 		on = true;
 	}
 }

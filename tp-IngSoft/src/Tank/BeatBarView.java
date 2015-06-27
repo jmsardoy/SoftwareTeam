@@ -30,13 +30,14 @@ public class BeatBarView extends HeartView implements LevelObserver{
 
 	public BeatBarView(ControllerInterface controller, BeatModelInterface model) {
 		super(controller, model);
+		model.registerObserver((LevelObserver)this);
 	}
 	
     public void createView() {
         viewPanel = new JPanel(new GridLayout(1, 2));
         viewFrame = new JFrame("View");
         viewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        viewFrame.setSize(new Dimension(100, 80));
+        viewFrame.setPreferredSize(new Dimension(200, 120));
         bpmOutputLabel = new JLabel("offline", SwingConstants.CENTER);
 		beatBar = new BeatBar();
 		beatBar.setValue(0);
@@ -107,7 +108,6 @@ public class BeatBarView extends HeartView implements LevelObserver{
 	
 	public void setBeatBarToDefault(){
 		beatBar.resume();
-		//beatBar = new BeatBar();
 		beatBar.setValue(0);
 		bpmOutputLabel.setText("offline");
 	}

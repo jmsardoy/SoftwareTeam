@@ -16,4 +16,5 @@ public interface TankModelInterface {
 	void setParametros(float valorMinimo,float consumeRate,float fillRate);
 	float getTankValue();
 	boolean getEstadoBomba();
+	boolean getDatosErroneos();
 }
