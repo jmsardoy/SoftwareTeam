@@ -90,8 +90,8 @@ public void createView(){
 	contentPane.add(lblMinLevel);
 	
 	slider = new JSlider();
-	slider.setBounds(221, 82, 23, 169);
-	slider.setValue(30);
+	slider.setBounds(221, 78, 23, 180);
+	slider.setValue(0);
 	slider.setOrientation(SwingConstants.VERTICAL);
 	contentPane.add(slider);
 	
@@ -217,12 +217,11 @@ public void createView(){
 				nivelMinimo = Float.parseFloat(textField.getText());
 				consumo = Float.parseFloat(textField_1.getText());
 				llenado = Float.parseFloat(textField_2.getText());
-				//slider.setValue((int)nivelMinimo);
-				
+				slider.setValue((int)nivelMinimo);
 				controller.simular(nivelMinimo,consumo,llenado);
 			}
 			catch(NumberFormatException e1){
-				showErrorMessage("Algun campo esta vacio");
+				showErrorMessage("Algun campo esta vacio, o algun caracter no es un numero");
 			}
 		}
 		if(e.getSource() == btnParar){
