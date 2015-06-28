@@ -62,7 +62,7 @@ public class BeatBarView extends HeartView implements LevelObserver{
             	updateLevel();
             }
         });
-        stopMenuItem = new JMenuItem("Beat");
+        stopMenuItem = new JMenuItem("DJ");
         menu.add(stopMenuItem); 
         stopMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {

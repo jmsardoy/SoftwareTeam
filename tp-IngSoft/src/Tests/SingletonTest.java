@@ -8,28 +8,26 @@ import org.junit.Test;
 
 import Heart.HeartModel;
 
-
 public class SingletonTest {
 
-	
 	private HeartModel heart;
-	
-	
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		heart = HeartModel.getInstance();
 	}
+
 	@Test
 	public void NumeroDeLlamadasTest() {
 		int expected = heart.getNumeroDeLlamadas();
-		for(int i = 0; i<10;i++){
+		for (int i = 0; i < 10; i++) {
 			HeartModel.getInstance();
 		}
-		assertEquals(expected+10, heart.getNumeroDeLlamadas());
+		assertEquals(expected + 10, heart.getNumeroDeLlamadas());
 	}
-	
+
 	@Test
-	public void instanceTest(){
+	public void instanceTest() {
 		HeartModel instance = HeartModel.getInstance();
 		assertEquals(instance, HeartModel.getInstance());
 	}
