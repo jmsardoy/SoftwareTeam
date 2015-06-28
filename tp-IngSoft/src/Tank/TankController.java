@@ -3,6 +3,7 @@ package Tank;
 import Beat.BeatModelInterface;
 import Beat.ControllerInterface;
 import Beat.DJView;
+import BeatBarView.BeatBarView;
 
 public class TankController implements ControllerInterface{
 

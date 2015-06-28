@@ -1,9 +1,9 @@
 package Heart;
 
-import Tank.BeatBarView;
 import Beat.BeatModelInterface;
 import Beat.ControllerInterface;
 import Beat.DJView;
+import BeatBarView.BeatBarView;
   
 public class HeartController implements ControllerInterface {
 	static HeartModelInterface model;

@@ -1,6 +1,6 @@
 package Beat;
 
-import Tank.BeatBarView;
+import BeatBarView.BeatBarView;
 
   
 public class BeatController implements ControllerInterface {

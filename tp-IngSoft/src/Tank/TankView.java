@@ -228,4 +228,4 @@ public void createView(){
 			controller.parar();
 		}
 	}
-}
+}	
